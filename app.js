@@ -83,7 +83,19 @@ const viewJobs = () => {
 
 const viewEmployees = () => {
     connection.query(
-        'SELECT employee.id, first_name, last_name, title, salary, dept_name, manager_id FROM ((department JOIN role ON department.id = role.department_id) JOIN employee ON role_id = employee.role_id);', 
+        `SELECT
+        employee.id,
+        employee.first_name,
+        employee.last_name,
+        role.title,
+        department.dept_name,
+        FROM employee
+        LEFT JOIN role
+        ON role.id = employee.role_id
+        LEFT JOIN department
+        ON department.id = role.department_id
+        LEFT JOIN employee m ON m.id = e.manager_id
+        ORDER BY employee.id;`, 
         function (err, res) {
         if (err) throw err;
         console.table(res);
@@ -100,7 +112,7 @@ const addDepartment = () => {
         },
     ])
     .then(answer => {
-        connect.query(
+        connection.query(
             'INSERT INTO department (dept_name) VALUES (?)',
             [answer.department],
             function (err, res) {
@@ -131,7 +143,7 @@ const addJob = () => {
         },
     ])
     .then(answer => {
-        connect.query(
+        connection.query(
             'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)',
             [answer.jobTitle, answer.salary, answer.deptId],
             function (err, res) {
@@ -166,9 +178,9 @@ const addEmployee = () => {
         },
     ])
     .then(answer => {
-        connect.query(
+        connection.query(
             'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
-            [answer.nameFirst, answer.nameSecond, answer.roleId, answer.managerId],
+            [answer.nameFirst, answer.nameLast, answer.roleId, answer.managerId],
             function (err, res) {
                 if (err) throw err;
                 console.log('Employee added');
@@ -192,7 +204,7 @@ const updateEmployee = () => {
         },
     ])
     .then(answer => {
-        connect.query(
+        connection.query(
             'UPDATE employee SET role_id=? WHERE id=?',
             [answer.roleId, answer.id],
             function (err, res) {
