@@ -84,18 +84,18 @@ const viewJobs = () => {
 const viewEmployees = () => {
     connection.query(
         `SELECT
-        employee.id,
-        employee.first_name,
-        employee.last_name,
-        role.title,
-        department.dept_name,
-        FROM employee
-        LEFT JOIN role
-        ON role.id = employee.role_id
-        LEFT JOIN department
-        ON department.id = role.department_id
+        e.id,
+        e.first_name,
+        e.last_name,
+        r.title,
+        d.dept_name,
+        FROM employee e
+        LEFT JOIN role r
+        ON r.id = e.role_id
+        LEFT JOIN department d
+        ON d.id = r.department_id
         LEFT JOIN employee m ON m.id = e.manager_id
-        ORDER BY employee.id;`, 
+        ORDER BY e.id;`, 
         function (err, res) {
         if (err) throw err;
         console.table(res);
