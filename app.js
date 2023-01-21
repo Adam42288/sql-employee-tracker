@@ -64,3 +64,16 @@ const viewJobs = () => {
     });
 };
 
+const viewEmployees = () => {
+    connection.query(
+        'SELECT employee.id, first_name, last_name, title, salary, dept_name, manager_id FROM ((department JOIN role ON department.id = role.department_id) JOIN employee ON role_id = employee.role_id);', 
+        function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        menu();
+    });
+};
+
+
+
+
