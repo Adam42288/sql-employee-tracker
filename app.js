@@ -84,11 +84,13 @@ const viewJobs = () => {
 const viewEmployees = () => {
     connection.query(
         `SELECT
-        e.id,
-        e.first_name,
-        e.last_name,
-        r.title,
-        d.dept_name,
+        e.id AS "Employee ID",
+        e.first_name AS "First Name",
+        e.last_name AS "Last Name",
+        r.title AS "Job Title",
+        r.salary AS "Role Salary",
+        e.manager_id AS "Manager Employee ID",
+        d.dept_name AS "Department Name"
         FROM employee e
         LEFT JOIN role r
         ON r.id = e.role_id
