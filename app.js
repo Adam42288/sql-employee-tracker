@@ -27,9 +27,9 @@ const menu = () => {
             'View Jobs',
             'View Employees',
             'Add a Department',
-            'Add a job',
-            'Add an employee',
-            'Update an employee job',
+            'Add a Job',
+            'Add an Employee',
+            'Update Employee',
             'Exit',
         ],
     })
@@ -53,6 +53,14 @@ const menu = () => {
             case 'Add an Employee':
                 addEmployee();
                 break;
+            case 'Update Employee':
+                updateEmployee();
+                break;
+            case 'Exit':
+                connection.end();
+                break;
+            default:
+                connection.end();
         }
     })
 };
@@ -170,4 +178,28 @@ const addEmployee = () => {
     });
 };
 
-
+const updateEmployee = () => {
+    inquirer.prompt([
+        {
+            name: 'id',
+            type: 'input',
+            message: 'Enter Employee id',
+        },
+        {
+            name: 'roleId',
+            type: 'input',
+            message: 'Enter the new role ID',
+        },
+    ])
+    .then(answer => {
+        connect.query(
+            'UPDATE employee SET role_id=? WHERE id=?',
+            [answer.roleId, answer.id],
+            function (err, res) {
+                if (err) throw err;
+                console.log('Employee updated');
+                menu();
+            }
+        );
+    });
+};
