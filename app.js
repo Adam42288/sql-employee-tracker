@@ -10,3 +10,40 @@ const connection = mysql.createConnection({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
 });
+
+connection.connect((err) => {
+if (err) throw err;
+console.log("Starting team manager...");
+menu();
+});
+
+const menu = () => {
+    inquirer.prompt({
+        message: "Welcome to your team organizer app. Select an option below",
+        name: 'menu',
+        type: 'list',
+        choices: [
+            'View Departments',
+            'View Jobs',
+            'View Employees',
+            'Add a Department',
+            'Add a job',
+            'Add an employee',
+            'Update an employee job',
+            'Exit',
+        ],
+    })
+    .then(response => {
+        switch (response.menu) {
+            case 'View Departments':
+                viewDepartment();
+                break;
+            case 'View Jobs':
+                viewJobs();
+                break;
+            case 'View Employees':
+                viewEmployees();
+                break;
+        }
+    })
+}
