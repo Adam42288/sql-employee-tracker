@@ -15,7 +15,8 @@
     "dependencies": {
         "inquirer": "^8.2.4",
         "mysql2": "^2.2.5",
-        "console.table": "^0.10.0"
+        "console.table": "^0.10.0",
+        "dotenv": "^8.2.0"
     },
     "homepage": "https://github.com/Adam42288/sql-employee-tracker/blob/main/README.md"
   }
