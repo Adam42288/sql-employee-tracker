@@ -44,6 +44,12 @@ const menu = () => {
             case 'View Employees':
                 viewEmployees();
                 break;
+            case 'Add a Department':
+                addDepartment();
+                break;
+            case 'Add a Job':
+                addJob();
+                break;
         }
     })
 };
@@ -74,6 +80,55 @@ const viewEmployees = () => {
     });
 };
 
-
+const addDepartment = () => {
+    inquirer.prompt([
+        {
+            name: 'department',
+            type: 'input',
+            message: 'What is the name of the department?',
+        },
+    ])
+    .then(answer => {
+        connect.query(
+            'INSERT INTO department (dept_name) VALUES (?)',
+            [answer.department],
+            function (err, res) {
+                if (err) throw err;
+                console.log('Department added');
+                menu();
+            }
+        );
+    });
+};
+const addJob = () => {
+    inquirer.prompt([
+        {
+            name: 'jobTitle',
+            type: 'input',
+            message: 'What is the job title?',
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'Enter the salary',
+        },
+        {
+            name: 'deptId',
+            type: 'input',
+            message: 'Enter the department ID number',
+        },
+    ])
+    .then(answer => {
+        connect.query(
+            'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)',
+            [answer.jobTitle, answer.salary, answer.deptId],
+            function (err, res) {
+                if (err) throw err;
+                console.log('Job added');
+                menu();
+            }
+        );
+    });
+};
 
 
