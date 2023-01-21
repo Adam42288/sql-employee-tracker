@@ -46,4 +46,12 @@ const menu = () => {
                 break;
         }
     })
-}
+};
+
+const viewDepartment = () => {
+    connection.query('SELECT * FROM department', function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        menu();
+    });
+};
