@@ -1,0 +1,21 @@
+{
+    "name": "employee-cms",
+    "version": "1.0.0",
+    "description": "A command-line based tool to manage an employee database.",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Adam42288/sql-employee-tracker"
+    },
+    "author": "Adam Santillana",
+    "license": "MIT",
+    "dependencies": {
+        "inquirer": "^8.2.4",
+        "mysql": "2.18.1"
+    },
+    "homepage": "https://github.com/Adam42288/sql-employee-tracker/blob/main/README.md"
+  }
+  
