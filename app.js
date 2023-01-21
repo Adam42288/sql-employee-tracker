@@ -50,6 +50,9 @@ const menu = () => {
             case 'Add a Job':
                 addJob();
                 break;
+            case 'Add an Employee':
+                addEmployee();
+                break;
         }
     })
 };
@@ -100,6 +103,7 @@ const addDepartment = () => {
         );
     });
 };
+
 const addJob = () => {
     inquirer.prompt([
         {
@@ -125,6 +129,41 @@ const addJob = () => {
             function (err, res) {
                 if (err) throw err;
                 console.log('Job added');
+                menu();
+            }
+        );
+    });
+};
+const addEmployee = () => {
+    inquirer.prompt([
+        {
+            name: 'nameFirst',
+            type: 'input',
+            message: 'Enter first name',
+        },
+        {
+            name: 'nameLast',
+            type: 'input',
+            message: 'Enter last name',
+        },
+        {
+            name: 'roleId',
+            type: 'input',
+            message: 'Enter the job ID number',
+        },
+        {
+            name: 'managerId',
+            type: 'input',
+            message: 'Enter the manager ID number',
+        },
+    ])
+    .then(answer => {
+        connect.query(
+            'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
+            [answer.nameFirst, answer.nameSecond, answer.roleId, answer.managerId],
+            function (err, res) {
+                if (err) throw err;
+                console.log('Employee added');
                 menu();
             }
         );
